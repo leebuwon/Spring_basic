@@ -1,16 +1,25 @@
 package com.ll.basic1;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
 
     private int sum;
 
-    public HomeController() {
+    private final List<Person> personList;
+
+    public HomeController(List<Person> personList) {
+        this.personList = personList;
         this.sum = 0;
     }
 
@@ -47,5 +56,43 @@ public class HomeController {
     public int showPlus(@RequestParam(defaultValue = "100") int a,
                         @RequestParam int b){
         return a + b;
+    }
+
+    @GetMapping("/home/addPerson")
+    @ResponseBody
+    public String addPerson(@RequestParam String name,
+                            @RequestParam int age){
+        Person p = new Person(name, age);
+        System.out.println(p);
+
+        personList.add(p);
+
+        return "%d번 사람이 추가되었습니다.".formatted(p.getId());
+
+    }
+
+    @GetMapping("/home/people")
+    @ResponseBody
+    public List<Person> showPeople(){
+        return personList;
+    }
+}
+
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+class Person{
+    private static int lastId;
+    private final int id;
+    private final String name;
+    private final int age;
+
+    static {
+        lastId = 0;
+    }
+
+    Person(String name, int age){
+        this(++lastId, name, age);
     }
 }
