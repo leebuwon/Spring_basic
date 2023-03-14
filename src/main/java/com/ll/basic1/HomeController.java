@@ -1,9 +1,6 @@
 package com.ll.basic1;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,6 +85,27 @@ public class HomeController {
 
         return "%d번 사람이 삭제되었습니다..".formatted(id);
     }
+
+    @GetMapping("/home/modifyPerson")
+    @ResponseBody
+    public String modifyPerson(@RequestParam int id,
+                               @RequestParam String name,
+                               @RequestParam int age){
+        // 이 stream 외우도록하자.
+        Person found = personList.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElse(null);
+
+        if (found == null){
+            return "%d번 사람이 존재하지 않습니다.".formatted(id);
+        }
+
+        found.setName(name);
+        found.setAge(age);
+
+        return "%d번 사람이 수정되었습니다..".formatted(id);
+    }
 }
 
 @AllArgsConstructor
@@ -96,9 +114,9 @@ public class HomeController {
 @ToString
 class Person{
     private static int lastId;
-    private final int id;
-    private final String name;
-    private final int age;
+    private int id;
+    private String name;
+    private int age;
 
     static {
         lastId = 0;
@@ -106,5 +124,9 @@ class Person{
 
     Person(String name, int age){
         this(++lastId, name, age);
+    }
+
+    Person(){
+
     }
 }
