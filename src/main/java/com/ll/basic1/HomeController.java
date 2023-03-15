@@ -1,11 +1,17 @@
 package com.ll.basic1;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -106,6 +112,27 @@ public class HomeController {
 
         return "%d번 사람이 수정되었습니다..".formatted(id);
     }
+
+    @GetMapping("/home/cookie/increase")
+    @ResponseBody
+    public int showCookieIncrease(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+        int countInCookie = 0;
+
+        if (req.getCookies() != null){
+            countInCookie = Arrays.stream(req.getCookies())
+                    .filter(cookie ->  cookie.getName().equals("count"))
+                    .map(Cookie::getValue)
+                    .mapToInt(Integer::parseInt)
+                    .findFirst()
+                    .orElse(0);
+        }
+
+        int newCountInCookie = countInCookie + 1;
+
+        resp.addCookie(new Cookie("count", newCountInCookie + ""));
+
+        return newCountInCookie;
+    }
 }
 
 @AllArgsConstructor
@@ -124,9 +151,5 @@ class Person{
 
     Person(String name, int age){
         this(++lastId, name, age);
-    }
-
-    Person(){
-
     }
 }
