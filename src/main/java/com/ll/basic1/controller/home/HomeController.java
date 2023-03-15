@@ -5,7 +5,11 @@ import com.ll.basic1.controller.member.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,12 +27,13 @@ public class HomeController {
 
     private final List<Person> personList;
 
+    // 필드주입
+    @Autowired
     private MemberService memberService;
 
     public HomeController() {
         personList = new ArrayList<>();
         this.sum = 0;
-        memberService = new MemberService();
     }
 
     @GetMapping("/home/main")
