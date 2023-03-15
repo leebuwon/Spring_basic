@@ -1,5 +1,7 @@
 package com.ll.basic1.controller.home;
 
+import com.ll.basic1.controller.member.entity.Member;
+import com.ll.basic1.controller.member.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,9 +23,12 @@ public class HomeController {
 
     private final List<Person> personList;
 
-    public HomeController(List<Person> personList) {
-        this.personList = personList;
+    private MemberService memberService;
+
+    public HomeController() {
+        personList = new ArrayList<>();
         this.sum = 0;
+        memberService = new MemberService();
     }
 
     @GetMapping("/home/main")
@@ -131,6 +137,12 @@ public class HomeController {
         resp.addCookie(new Cookie("count", newCountInCookie + ""));
 
         return newCountInCookie;
+    }
+
+    @GetMapping("/home/user1")
+    @ResponseBody
+    public Member showUser1() {
+        return memberService.findByUsername("user1");
     }
 }
 
