@@ -40,15 +40,15 @@ public class MemberController {
 
         RsData rsData = memberService.tryLogin(username, password);
 
-        if (rsData.isSuccess()) {
-            long memberId = (long) rsData.getData();
-            rq.setCookie("loginMemberId", memberId);
-        }
-
 //        if (rsData.isSuccess()) {
-//            Member member = (Member) rsData.getData();
-//            rq.setCookie("loginMemberId", member.getId());
+//            long memberId = (long) rsData.getData();
+//            rq.setCookie("loginMemberId", memberId);
 //        }
+
+        if (rsData.isSuccess()) {
+            Member member = (Member) rsData.getData();
+            rq.setCookie("loginMemberId", member.getId());
+        }
 
         return rsData;
     }
