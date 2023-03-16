@@ -1,6 +1,6 @@
 package com.ll.basic1.controller.member.service;
 
-import com.ll.basic1.base.rq.RsData;
+import com.ll.basic1.base.rsData.RsData;
 import com.ll.basic1.controller.member.entity.Member;
 import com.ll.basic1.controller.member.repository.MemberRepository;
 import lombok.AllArgsConstructor;
