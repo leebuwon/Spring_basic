@@ -1,12 +1,10 @@
 package com.ll.basic1.controller.member.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
-@Data
+@Getter
+@ToString
 public class Member {
 
     private static long lastId;
