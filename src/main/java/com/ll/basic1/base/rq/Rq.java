@@ -4,9 +4,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.Arrays;
-
+@Component
+@RequestScope // 이 객체는 매 요청마다 생성된다.
 @AllArgsConstructor
 public class Rq {
     private final HttpServletRequest req;
@@ -14,16 +17,17 @@ public class Rq {
 
     public boolean removeCookie(String name) {
         if (req.getCookies() != null) {
-            Arrays.stream(req.getCookies())
-                    .filter(cookie -> cookie.getName().equals(name))
-                    .forEach(cookie -> {
-                        cookie.setMaxAge(0);
-                        resp.addCookie(cookie);
-                    });
+            Cookie cookie = Arrays.stream(req.getCookies())
+                    .filter(c -> c.getName().equals(name))
+                    .findFirst()
+                    .orElse(null);
 
-            return Arrays.stream(req.getCookies())
-                    .filter(cookie -> cookie.getName().equals(name))
-                    .count() > 0;
+            if (cookie != null){
+                cookie.setMaxAge(0);
+                resp.addCookie(cookie);
+
+                return true;
+            }
         }
 
         return false;
