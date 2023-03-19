@@ -1,4 +1,4 @@
-package com.ll.basic1.controller.member.entity;
+package com.ll.basic1.boundedContext.member.entity;
 
 import lombok.*;
 

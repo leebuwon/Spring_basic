@@ -1,6 +1,6 @@
-package com.ll.basic1.controller.member.repository;
+package com.ll.basic1.boundedContext.member.repository;
 
-import com.ll.basic1.controller.member.entity.Member;
+import com.ll.basic1.boundedContext.member.entity.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package com.ll.basic1.controller.home;
+package com.ll.basic1.boundedContext.home;
 
-import com.ll.basic1.controller.member.entity.Member;
-import com.ll.basic1.controller.member.service.MemberService;
+import com.ll.basic1.boundedContext.member.entity.Member;
+import com.ll.basic1.boundedContext.member.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
