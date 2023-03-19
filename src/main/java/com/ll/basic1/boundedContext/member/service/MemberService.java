@@ -11,17 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MemberService {
-
     private final MemberRepository memberRepository;
 
     public RsData tryLogin(String username, String password) {
-        Member member = memberRepository.findByUsername(username);
+        Member member = memberRepository.findByUsername(username).orElse(null);
 
-        if (member == null){
-            return RsData.of("F-2", "%s는 존재하지 않는 회원입니다.".formatted(username));
+        if (member == null) {
+            return RsData.of("F-2", "%s(은)는 존재하지 않는 회원입니다.".formatted(username));
         }
 
-        if (!member.getPassword().equals(password)){
+        if (!member.getPassword().equals(password)) {
             return RsData.of("F-1", "비밀번호가 일치하지 않습니다.");
         }
 
@@ -29,10 +28,10 @@ public class MemberService {
     }
 
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username);
+        return memberRepository.findByUsername(username).orElse(null);
     }
 
     public Member findById(long id) {
-        return memberRepository.findById(id);
+        return memberRepository.findById(id).orElse(null);
     }
 }
