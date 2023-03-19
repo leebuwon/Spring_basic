@@ -15,3 +15,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create # DB 테이블 자동생성(엔티티 클래스만 만들면 됨)
+
+logging:
+    level:
+      org:
+         hibernate:
+              type:
+                nodeValue: trace
+                descriptor:
+                  sql: DEBUG
+              SQL: DEBUG+
