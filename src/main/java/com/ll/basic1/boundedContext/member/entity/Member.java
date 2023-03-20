@@ -9,9 +9,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @ToString
 @Entity
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
 
